@@ -31,7 +31,7 @@ public class ConfigConstants {
     /**
      * 拒绝策略
      */
-    public static final String GROUP_REJECTION_POLICY="qduck.pool.rejectPolicy";
+    public static final String GROUP_REJECTION_POLICY="QDuck.pool.rejectPolicy";
 
     //------------------配置文件路径常量---------------------------------
 
@@ -51,4 +51,16 @@ public class ConfigConstants {
      * 端口号
      */
     public static final String PORT="QDuck.port";
+    /**
+     * redis数据库的ip地址
+     */
+    public static final String REDIS_HOST="QDuck.redis.host";
+    /**
+     * redis数据库的端口号
+     */
+    public static final String REDIS_PORT="QDuck.redis.port";
+    /**
+     * redis数据库的密码
+     */
+    public static final String REDIS_PWD="QDuck.redis.pwd";
 }

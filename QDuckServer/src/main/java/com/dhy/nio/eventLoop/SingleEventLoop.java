@@ -1,11 +1,9 @@
 package com.dhy.nio.eventLoop;
 
-import lombok.Data;
-
+import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * <p>
@@ -18,7 +16,7 @@ public abstract class SingleEventLoop extends AbstractEventLoop{
     protected ExecutorService executorService = Executors.newFixedThreadPool(1,new ThreadFactory() {
                 @Override
                 public Thread newThread(Runnable r) {
-                    return new Thread(r,"Single-Thread");
+                    return new Thread(r,"Single-Thread-"+ UUID.randomUUID().toString().substring(0,10));
                 }
             });
 }

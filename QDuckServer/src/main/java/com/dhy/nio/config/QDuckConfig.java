@@ -22,8 +22,8 @@ public class QDuckConfig {
      * 先尝试从环境变量中读取配置文件路径,如果环境变量中不存在,则使用默认配置文件路径
      */
     public QDuckConfig() {
-        String config_path = System.getProperty(DEFAULT_CONFIG_PROPERTY);
-        yamlUtil = new YamlUtil(config_path == null ? DEFAULT_CONFIG_YML_PATH : config_path);
+        String configPath = System.getProperty(DEFAULT_CONFIG_PROPERTY);
+        yamlUtil = new YamlUtil(configPath == null ? DEFAULT_CONFIG_YML_PATH : configPath);
     }
 
     public String getValue(String key){

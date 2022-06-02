@@ -10,9 +10,8 @@
         <module name="QDuckServer" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="QDuckClient" target="1.5" />
-      <module name="QDuckServer" target="1.5" />
+    <bytecodeTargetLevel target="8">
+      <module name="QDuck" target="" />
     </bytecodeTargetLevel>
   </component>
 </project>

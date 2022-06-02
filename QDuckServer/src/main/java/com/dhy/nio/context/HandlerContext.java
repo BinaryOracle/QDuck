@@ -1,12 +1,9 @@
 package com.dhy.nio.context;
 
+import com.dhy.nio.domain.Attr;
 import com.dhy.nio.domain.Msg;
-import com.dhy.nio.handler.*;
+import com.dhy.nio.handler.coreHandler.*;
 import lombok.extern.slf4j.Slf4j;
-
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
 
 
 /**
@@ -27,20 +24,18 @@ public class HandlerContext {
     /**
      * 调用入站处理器链条
      */
-    public void invokeInHandlers(Msg msg){
-            headWrapper.invokeInHandler(msg);
+    public void invokeInHandlers(Msg msg, Attr attr){
+            headWrapper.invokeInHandler(msg,attr);
     }
 
     /**
      * 调用出栈处理器链条
      */
-    public void invokeOutHandlers(Msg msg){
-        headWrapper.invokeOutHandler(msg);
+    public void invokeOutHandlers(Msg msg, Attr attr){
+        headWrapper.invokeOutHandler(msg,attr);
     }
 
-    /**
-     * 头插法
-     */
+
     public void addInHandlers(InHandler inHandler){
         operationVerify(inHandler);
         doAddHandler(inHandler);
@@ -51,9 +46,12 @@ public class HandlerContext {
         doAddHandler(outHandler);
     }
 
+    /**
+     * 新元素从尾部插入,确保后添加的handler先被执行
+     */
     private void doAddHandler(Handler handler){
-        HandlerWrapper handlerWrapper = HandlerWrapper.builder().curHandler(handler).prev(headWrapper).next(headWrapper.getNext()).build();
-        headWrapper.addAfter(handlerWrapper);
+        HandlerWrapper handlerWrapper = HandlerWrapper.builder().curHandler(handler).prev(endWrapper.getPrev()).next(endWrapper).build();
+        endWrapper.addBefore(handlerWrapper);
     }
 
     public void removeInHandlers(InHandler inHandler){

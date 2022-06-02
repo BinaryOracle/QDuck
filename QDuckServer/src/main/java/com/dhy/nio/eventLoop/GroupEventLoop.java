@@ -32,6 +32,7 @@ public abstract class GroupEventLoop extends SingleEventLoop{
      */
     @Override
     public void init() {
+        super.init();
         core_pool_size= Integer.valueOf(qDuckConfig.getValue(GROUP_CORE_POOL_SIZE));
         core_pool_size=core_pool_size==-1?Runtime.getRuntime().availableProcessors()+1:core_pool_size;
         max_thread_size= Integer.valueOf(qDuckConfig.getValue(GROUP_MAX_POOL_SIZE));

@@ -3,7 +3,9 @@ package com.dhy.nio.eventLoop;
 
 
 import com.dhy.nio.context.HandlerContext;
+import com.dhy.nio.domain.Attr;
 import com.dhy.nio.domain.Msg;
+import com.dhy.nio.online.OnlineUsers;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -11,12 +13,12 @@ import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import static com.dhy.nio.constants.MsgFormat.MAGIC;
+import static com.dhy.nio.domain.Attr.REDIS_ATTR;
+import static com.dhy.nio.parse.ProtocolParse.parse;
 
 /**
  * @author 大忽悠
@@ -43,6 +45,7 @@ public class WorkerEventLoop extends GroupEventLoop {
 
     private volatile boolean stop = false;
 
+
     /**
      * 注册感兴趣的事件
      */
@@ -64,6 +67,9 @@ public class WorkerEventLoop extends GroupEventLoop {
                     SelectionKey sckey = sc.register(selector, 0, null);
                     //监听感兴趣的事件
                     sckey.interestOps(SelectionKey.OP_READ);
+                    //给其绑定了一个读缓冲区
+                    ByteBuffer readBuf=ByteBuffer.allocate(1024*1024);
+                    sckey.attach(readBuf);
                     //不管有没有事件，立刻返回，可以根据返回值进行判断
                     selector.selectNow();
                 } catch (IOException e) {
@@ -78,8 +84,9 @@ public class WorkerEventLoop extends GroupEventLoop {
     }
 
     /**
-     * 不断从人物队列轮询新客户端连接任务,
+     * 不断从任务队列轮询新客户端连接任务,
      * 如果发现了,就将该客户端后续读写事件交给一个新的工作线程去处理
+     * TODO: 需要将客户端通道绑定到线程池中某个线程上,待完善
      */
     @Override
     public void run() {
@@ -102,26 +109,31 @@ public class WorkerEventLoop extends GroupEventLoop {
                     //可读事件---处理客户端发送过来的消息
                     if (key.isReadable()) {
                         SocketChannel sc = (SocketChannel) key.channel();
-                        ByteBuffer buffer = ByteBuffer.allocate(1024*1024);
                         try {
-                            int read = sc.read(buffer);
-                            msgHandle(buffer);
+                            //从附件中取出读缓冲区
+                            ByteBuffer readBuf = (ByteBuffer)key.attachment();
+                            int read = sc.read(readBuf);
                             //客户端正常关闭
                             if (read == -1) {
                                 //取消当前客户端通道的注册
                                 key.cancel();
                                 sc.close();
-                                log.info("client close normal");
+                                OnlineUsers.removeOneOnLineUser(sc);
+                                log.info("client down normal");
                             }
                             else {
-                                buffer.flip();
+                                //切换读写模式--读取完当前批次数据后
+                                //清空读缓冲区,为下次客户端消息过来进行准备
+                                readBuf.flip();
+                                msgHandle(readBuf,sc,read);
                                 log.debug("{} message:", sc.getRemoteAddress());
                             }
                         } catch (IOException e) {
-                            log.error("client read error : ",e);
+                            log.error("client down abnormal");
                             //客户端异常关闭
                             key.cancel();
                             sc.close();
+                            OnlineUsers.removeOneOnLineUser(sc);
                         }
                     }
                     //移除处理完后的事件
@@ -137,27 +149,16 @@ public class WorkerEventLoop extends GroupEventLoop {
      * 处理读入缓冲区中的消息
      * TODO:这里还有很多细节没有处理,比如数据量过多,一次性没读取完,那么序列化就会报错等
      */
-    private void msgHandle(ByteBuffer buffer) {
-        if(buffer.limit()<7){
-            throw new IllegalArgumentException("通信报文格式异常");
-        }
-        //解析魔数
-        byte[] magic=new byte[3];
-        buffer.get(magic);
-        String magicStr = new String(magic);
-        if(magicStr.equals(MAGIC)){
-            throw new IllegalArgumentException("magic字段为非法值"+magicStr);
-        }
-        //解析数据长度
-        byte[] len=new byte[4];
-        buffer.get(len);
-        Integer dataLen = Integer.valueOf(Arrays.toString(len));
-        //读取指定长度的数据
-        byte[] data=new byte[dataLen];
-        buffer.get(data);
-        Msg msg = Msg.byteToMsg(data);
+    private void msgHandle(ByteBuffer buffer,SocketChannel sc,Integer read) {
         //触发入站处理器进行数据处理
-        handlerContext.invokeInHandlers(msg);
+        Attr attr = new Attr();
+        attr.addAttr(REDIS_ATTR,redisDb);
+        Msg msg = parse(buffer, sc, read);
+        //解析出现异常或者数据不完整
+        if(msg==null){
+            return;
+        }
+        handlerContext.invokeInHandlers(msg,attr);
     }
 
     /**

@@ -22,6 +22,7 @@ public class YamlUtil {
     private Map<String, String> resCache;
     private final String ymlFilePath;
     private final String KEY_DELIMITER = "\\.";
+    private final String  NULL_KEY="NULL";
 
     public YamlUtil(String ymlFilePath) {
         this.ymlFilePath = ymlFilePath;
@@ -31,7 +32,7 @@ public class YamlUtil {
     @SneakyThrows
     public String get(String key) {
         if (resCache != null && resCache.containsKey(key)) {
-            return resCache.get(key);
+            return resCache.get(key).equals(NULL_KEY)?null:resCache.get(key);
         }
         //懒加载
         if (yaml == null) {
@@ -62,7 +63,7 @@ public class YamlUtil {
         if (resCache == null) {
             resCache = new ConcurrentHashMap<>();
         }
-        resCache.put(key, value);
+        resCache.put(key, value==null?NULL_KEY: value);
         return value;
     }
 

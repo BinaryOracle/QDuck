@@ -1,8 +1,8 @@
 package com.dhy.nio.eventLoop;
 
 import com.dhy.nio.context.HandlerContext;
-import com.dhy.nio.handler.InHandler;
-import com.dhy.nio.handler.OutHandler;
+import com.dhy.nio.handler.coreHandler.InHandler;
+import com.dhy.nio.handler.coreHandler.OutHandler;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -24,7 +24,7 @@ public class BossEventLoop extends SingleEventLoop {
     /**
      * 工作线程---线程池
      */
-    private WorkerEventLoop workers;
+    private WorkerEventLoop workers=new WorkerEventLoop();
     /**
      * 服务端Boss线程是否启动
      */
@@ -91,6 +91,7 @@ public class BossEventLoop extends SingleEventLoop {
     @Override
     public void init() {
         try {
+            super.init();
             log.info("Boss init...");
             //创建一个ServerSocketChannel通道
             ServerSocketChannel ssc = ServerSocketChannel.open();
