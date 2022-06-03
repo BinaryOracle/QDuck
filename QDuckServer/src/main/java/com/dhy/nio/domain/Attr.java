@@ -16,6 +16,7 @@ public class Attr {
     //---------------常见ATTR属性如下-------------------
 
     public static final String REDIS_ATTR="redisDB";
+    public static final String SOCKET_CHANNEL="sc";
 
     public void addAttr(String key,Object value){
         attrs.put(key,value);

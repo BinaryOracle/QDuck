@@ -1,8 +1,9 @@
 package com.dhy.nio.eventLoop;
 
 import com.dhy.nio.context.HandlerContext;
-import com.dhy.nio.handler.coreHandler.InHandler;
-import com.dhy.nio.handler.coreHandler.OutHandler;
+import com.dhy.nio.eventLoop.coreEventLoop.GroupEventLoop;
+import com.dhy.nio.context.handler.coreHandler.InHandler;
+import com.dhy.nio.context.handler.coreHandler.OutHandler;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -16,15 +17,11 @@ import static com.dhy.nio.constants.ConfigConstants.PORT;
  * @create 2022/6/1 12:00
  */
 @Slf4j
-public class BossEventLoop extends SingleEventLoop {
+public class BossEventLoop extends GroupEventLoop {
     /**
      * boss线程选择器,用于接收客户端的连接
      */
     private Selector boss;
-    /**
-     * 工作线程---线程池
-     */
-    private WorkerEventLoop workers=new WorkerEventLoop();
     /**
      * 服务端Boss线程是否启动
      */
@@ -76,7 +73,12 @@ public class BossEventLoop extends SingleEventLoop {
                         //设置客户端为非阻塞模式
                         sc.configureBlocking(false);
                         log.debug("{} connected", sc.getRemoteAddress());
-                        workers.register(sc);
+                        WorkerEventLoop workerEventLoop = new WorkerEventLoop();
+                        workerEventLoop.init();
+                        workerEventLoop.setHandlerContext(handlerContext);
+                        workerEventLoop.register(sc);
+                        //每个客户端都从线程池中选出一个线程进行监听,直到客户端关闭连接
+                        groupPool.execute(workerEventLoop);
                     }
                 }
             } catch (IOException e) {
@@ -107,10 +109,6 @@ public class BossEventLoop extends SingleEventLoop {
             SelectionKey ssckey = ssc.register(boss, 0, null);
             //服务端通道用来接收客户端的连接
             ssckey.interestOps(SelectionKey.OP_ACCEPT);
-            //初始化工作线程
-            workers.init();
-            //设置处理器环境上下文
-            workers.setHandlerContext(handlerContext);
         } catch (IOException e) {
             log.error("Boss init error: ",e);
         }
@@ -129,7 +127,7 @@ public class BossEventLoop extends SingleEventLoop {
      */
     @Override
     public void stop() {
-        workers.stop();
+        groupPool.shutdown();
         executorService.shutdown();
     }
 
@@ -141,5 +139,12 @@ public class BossEventLoop extends SingleEventLoop {
     public BossEventLoop addOutHandler(OutHandler handler){
         handlerContext.addOutHandlers(handler);
         return this;
+    }
+
+    /**
+     * 关闭服务器
+     */
+    public void setStop(boolean stop) {
+        this.stop = stop;
     }
 }

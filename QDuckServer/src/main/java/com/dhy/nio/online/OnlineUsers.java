@@ -20,6 +20,9 @@ public class OnlineUsers {
    }
 
    public static void removeOneOnLineUser(SocketChannel socketChannel){
+       if(socketChannel==null||SOCKETS.get(socketChannel)==null){
+           return;
+       }
        ONLINE_USERS.remove(SOCKETS.get(socketChannel));
    }
 
