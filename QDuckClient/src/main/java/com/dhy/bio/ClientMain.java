@@ -33,7 +33,7 @@ public class ClientMain {
      * 当前登录的用户名
      */
     private static String curUserName;
-    private static final RedisDb redis=new RedisDb("110.40.155.17",6380,"126433zdh");
+    private static final RedisDb redis=new RedisDb("localhost",6379,"123456");
 
     public static void main(String[] args) throws IOException, InterruptedException {
         Socket socket = new Socket("localhost", 5200);
