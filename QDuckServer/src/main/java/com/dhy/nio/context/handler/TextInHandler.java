@@ -44,7 +44,7 @@ public class TextInHandler implements InHandler {
         if (!redisDb.isUserExist(toUser)) {
             //发送错误信息回复用户,告知对应的用户不存在
             forwardMsgToUser(msg.getSocketChannel(), "不能将消息转发给不存在的用户",redisDb,msg.getMe(),null);
-            log.info("客户端[{}]所要通知的用户{}不存在: {}",msg.getMe(), toUser);
+            log.info("客户端[{}]所要通知的用户不存在: {}",msg.getMe(), toUser);
         } else {
             //将消息发送给对应的用户,并且保存消息到数据库
             String toUserMsg = msg.getString();
