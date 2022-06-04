@@ -10,6 +10,6 @@ QDuck:
     #一个救急线程最多可监听客户端数量
     maxTempThreadBindChannelNum: 1
   redis:
-    host: 110.40.155.17
-    port: 6380
-    pwd: 126433zdh
+    host: localhost
+    port: 6379
+    pwd: 123456
