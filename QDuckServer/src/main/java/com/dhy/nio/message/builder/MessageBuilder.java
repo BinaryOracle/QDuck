@@ -24,7 +24,7 @@ import static com.dhy.nio.util.ByteUtil.int2byte;
 @Slf4j
 public class MessageBuilder {
     /**
-     * 发送登录报文
+     * 客户端发送登录报文给服务器
      */
     public void sendLoginMessage(SocketChannel sc, ByteBuffer wf,String curUserName){
         try {
@@ -50,7 +50,7 @@ public class MessageBuilder {
     }
 
     /**
-     * 构建并发送QDuck通用报文
+     * 客户端构建并发送QDuck通用报文给服务器
      */
     public void sendMessage(SocketChannel sc, ByteBuffer wf, String curUserName, String toUser, byte[] data, byte msgType){
         try {

@@ -21,4 +21,11 @@ public abstract class SingleEventLoop extends AbstractEventLoop {
                     return new Thread(r,"Single-Thread-"+ UUID.randomUUID().toString().substring(0,10));
                 }
             });
+
+    public SingleEventLoop() {
+    }
+
+    public SingleEventLoop(String name) {
+        super(name);
+    }
 }

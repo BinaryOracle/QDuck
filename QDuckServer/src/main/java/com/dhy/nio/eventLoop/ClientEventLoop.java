@@ -5,6 +5,8 @@ import com.dhy.nio.domain.Attr;
 import com.dhy.nio.domain.Msg;
 import com.dhy.nio.context.handler.coreHandler.InHandler;
 import com.dhy.nio.context.handler.coreHandler.OutHandler;
+import com.dhy.nio.eventLoop.coreEventLoop.SingleEventLoop;
+import com.dhy.nio.eventLoop.util.ThreadNameGenerator;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -20,32 +22,29 @@ import static com.dhy.nio.domain.Attr.SOCKET_CHANNEL;
 
 /**
  * <p>
- *     客户端连接服务器使用的事件循环
+ * 客户端连接服务器使用的事件循环
  * </p>
+ *
  * @author 大忽悠
  * @create 2022/6/3 9:34
  */
 @Slf4j
 public class ClientEventLoop extends WorkerEventLoop {
-     private SocketChannel sc;
-     private static final String DEFAULT_HOST="localhost";
-    private static final Integer DEFAULT_PORT=5200;
-    private ExecutorService outHandlerThread = Executors.newFixedThreadPool(1,new ThreadFactory() {
-        @Override
-        public Thread newThread(Runnable r) {
-            return new Thread(r,"outHandler-Thread-"+ UUID.randomUUID().toString().substring(0,10));
-        }
-    });
+    private SocketChannel sc;
+    private static final String DEFAULT_HOST = "localhost";
+    private static final Integer DEFAULT_PORT = 5200;
+
     /**
      * 采用默认端口: 5200 和 默认主机 localhost进行连接
      */
     public ClientEventLoop() {
+        super(ThreadNameGenerator.generatorUniqueThreadName());
         try {
             //初始化父类组件
             super.init();
             //设置处理器环境上下文
             setHandlerContext(new HandlerContext());
-            sc=SocketChannel.open(new InetSocketAddress(DEFAULT_HOST,DEFAULT_PORT));
+            sc = SocketChannel.open(new InetSocketAddress(DEFAULT_HOST, DEFAULT_PORT));
             sc.configureBlocking(false);
             log.info("connect to server success !");
         } catch (IOException e) {
@@ -56,13 +55,14 @@ public class ClientEventLoop extends WorkerEventLoop {
     /**
      * 指定主机和端口号
      */
-    public ClientEventLoop(String host,Integer port){
+    public ClientEventLoop(String host, Integer port) {
+        super(ThreadNameGenerator.generatorUniqueThreadName());
         try {
             //初始化父类组件
             super.init();
             //设置处理器环境上下文
             setHandlerContext(new HandlerContext());
-            sc=SocketChannel.open(new InetSocketAddress(host,port));
+            sc = SocketChannel.open(new InetSocketAddress(host, port));
             sc.configureBlocking(false);
             log.info("connect to server success !");
         } catch (IOException e) {
@@ -75,20 +75,18 @@ public class ClientEventLoop extends WorkerEventLoop {
      */
     @Override
     public void start() {
-        //register
+        log.info("client starting ... ");
+        setIsCoreThread(true);
         super.register(sc);
-        //启动父类组件
-        super.start();
-        //执行监听线程
-        executorService.execute(this);
     }
 
-    public ClientEventLoop addInHandler(InHandler handler){
+
+    public ClientEventLoop addInHandler(InHandler handler) {
         handlerContext.addInHandlers(handler);
         return this;
     }
 
-    public ClientEventLoop addOutHandler(OutHandler handler){
+    public ClientEventLoop addOutHandler(OutHandler handler) {
         handlerContext.addOutHandlers(handler);
         return this;
     }
@@ -96,15 +94,15 @@ public class ClientEventLoop extends WorkerEventLoop {
     /**
      * 开启单独的写线程来触发客户端的写处理器
      */
-    public ClientEventLoop invokeOutHandler(){
+    public ClientEventLoop invokeOutHandler() {
         log.info("invoke client out handler");
         Attr attr = new Attr();
-        attr.addAttr(SOCKET_CHANNEL,sc);
-        attr.addAttr(REDIS_ATTR,redisDb);
-        outHandlerThread.execute(new Runnable() {
+        attr.addAttr(SOCKET_CHANNEL, sc);
+        attr.addAttr(REDIS_ATTR, redisDb);
+        executorService.execute(new Runnable() {
             @Override
             public void run() {
-                handlerContext.invokeOutHandlers(Msg.builder().build(),attr);
+                handlerContext.invokeOutHandlers(Msg.builder().build(), attr);
             }
         });
         return this;

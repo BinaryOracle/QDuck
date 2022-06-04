@@ -1,5 +1,6 @@
 package com.dhy.nio;
 
+import com.dhy.nio.context.handler.ClientTextInHandler;
 import com.dhy.nio.eventLoop.ClientEventLoop;
 import com.dhy.nio.context.handler.ClientOutHandler;
 
@@ -14,6 +15,6 @@ import com.dhy.nio.context.handler.ClientOutHandler;
 public class ClientMain {
     public static void main(String[] args) {
         ClientEventLoop clientEventLoop = new ClientEventLoop();
-        clientEventLoop.addOutHandler(new ClientOutHandler()).invokeOutHandler().start();
+        clientEventLoop.addInHandler(new ClientTextInHandler()).addOutHandler(new ClientOutHandler()).invokeOutHandler().start();
     }
 }

@@ -1,9 +1,10 @@
 package com.dhy.nio.eventLoop;
 
 import com.dhy.nio.context.HandlerContext;
-import com.dhy.nio.eventLoop.coreEventLoop.GroupEventLoop;
 import com.dhy.nio.context.handler.coreHandler.InHandler;
 import com.dhy.nio.context.handler.coreHandler.OutHandler;
+import com.dhy.nio.eventLoop.coreEventLoop.GroupEventLoop;
+import com.dhy.nio.eventLoop.coreEventLoop.SingleEventLoop;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -17,7 +18,7 @@ import static com.dhy.nio.constants.ConfigConstants.PORT;
  * @create 2022/6/1 12:00
  */
 @Slf4j
-public class BossEventLoop extends GroupEventLoop {
+public class BossEventLoop extends SingleEventLoop {
     /**
      * boss线程选择器,用于接收客户端的连接
      */
@@ -34,6 +35,10 @@ public class BossEventLoop extends GroupEventLoop {
      * 处理器环境上下文
      */
     private final HandlerContext handlerContext=new HandlerContext();
+    /**
+     * 线程池
+     */
+     private GroupEventLoop groupEventLoop;
 
     /**
      * 注册感兴趣的事件
@@ -73,12 +78,8 @@ public class BossEventLoop extends GroupEventLoop {
                         //设置客户端为非阻塞模式
                         sc.configureBlocking(false);
                         log.debug("{} connected", sc.getRemoteAddress());
-                        WorkerEventLoop workerEventLoop = new WorkerEventLoop();
-                        workerEventLoop.init();
-                        workerEventLoop.setHandlerContext(handlerContext);
-                        workerEventLoop.register(sc);
-                        //每个客户端都从线程池中选出一个线程进行监听,直到客户端关闭连接
-                        groupPool.execute(workerEventLoop);
+                        //将客户端绑定到线程池中某个线程上,然后由该线程完成对该客户端后续读写事件的处理
+                        groupEventLoop.execute(sc);
                     }
                 }
             } catch (IOException e) {
@@ -86,6 +87,8 @@ public class BossEventLoop extends GroupEventLoop {
             }
         }
     }
+
+
 
     /**
      * 初始化组件
@@ -109,6 +112,8 @@ public class BossEventLoop extends GroupEventLoop {
             SelectionKey ssckey = ssc.register(boss, 0, null);
             //服务端通道用来接收客户端的连接
             ssckey.interestOps(SelectionKey.OP_ACCEPT);
+            //初始化线程池
+            groupEventLoop=new GroupEventLoop(qDuckConfig,handlerContext,redisDb);
         } catch (IOException e) {
             log.error("Boss init error: ",e);
         }
@@ -126,8 +131,7 @@ public class BossEventLoop extends GroupEventLoop {
      * 停止组件
      */
     @Override
-    public void stop() {
-        groupPool.shutdown();
+    public void over() {
         executorService.shutdown();
     }
 

@@ -21,17 +21,13 @@ public class ConfigConstants {
      */
     public static final String GROUP_MAX_POOL_SIZE="QDuck.pool.threadMaxSize";
     /**
-     * 生存时间 - 针对救急线程 ---单位为秒
+     * 一个核心线程最多可监听客户端数量
      */
-    public static final String GROUP_KEEP_ALIVE_TIME="QDuck.pool.aliveTime";
+    public static final String CAN_CORE_THREAD_MAX_BIND_CHANNEL_NUM="QDuck.pool.maxCoreThreadBindChannelNum";
     /**
-     * 队列最大容量
+     * 一个救急线程最多可监听客户端数量
      */
-    public static final String GROUP_QUEUE_MAX_SIZE="QDuck.pool.queueMaxSize";
-    /**
-     * 拒绝策略
-     */
-    public static final String GROUP_REJECTION_POLICY="QDuck.pool.rejectPolicy";
+    public static final String CAN_TEMP_THREAD_MAX_BIND_CHANNEL_NUM="QDuck.pool.maxTempThreadBindChannelNum";
 
     //------------------配置文件路径常量---------------------------------
 

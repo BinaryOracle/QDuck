@@ -18,5 +18,5 @@ public interface Lifecycle {
     /**
      * 停止组件
      */
-  void stop();
+  void over();
 }

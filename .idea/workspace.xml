@@ -4,56 +4,29 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0af1bfee-30e0-4f31-990e-8d7f920a8ce0" name="Changes" comment="2.0">
-      <change afterPath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/ClientMain.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/context/handler/ClientOutHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/eventLoop/ClientEventLoop.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/message/builder/MessageBuilder.java" afterDir="false" />
+    <list default="true" id="0af1bfee-30e0-4f31-990e-8d7f920a8ce0" name="Changes" comment="3.0 QDuck客户端模块完善">
+      <change afterPath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/context/handler/ClientTextInHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/eventLoop/rejectPolicy/AbandonPolicy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/eventLoop/rejectPolicy/RejectPolicy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/eventLoop/util/ThreadNameGenerator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reactor变式模型.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QDuckClient/src/main/java/com/dhy/bio/ClientMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/QDuckClient/src/main/java/com/dhy/bio/ClientMain.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/ServerMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/ServerMain.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/context/HandlerContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/context/HandlerContext.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/context/HandlerWrapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/context/HandlerWrapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/domain/Attr.java" beforeDir="false" afterPath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/domain/Attr.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/eventLoop/AbstractEventLoop.java" beforeDir="false" afterPath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/eventLoop/coreEventLoop/AbstractEventLoop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QDuckServer/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/QDuckServer/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/ClientMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/ClientMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/constants/ConfigConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/constants/ConfigConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/context/handler/TextInHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/context/handler/TextInHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/context/handler/util/MsgUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/context/handler/util/MsgUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/eventLoop/BossEventLoop.java" beforeDir="false" afterPath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/eventLoop/BossEventLoop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/eventLoop/EventLoop.java" beforeDir="false" afterPath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/eventLoop/coreEventLoop/EventLoop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/eventLoop/GroupEventLoop.java" beforeDir="false" afterPath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/eventLoop/coreEventLoop/GroupEventLoop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/eventLoop/SingleEventLoop.java" beforeDir="false" afterPath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/eventLoop/coreEventLoop/SingleEventLoop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/eventLoop/ClientEventLoop.java" beforeDir="false" afterPath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/eventLoop/ClientEventLoop.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/eventLoop/WorkerEventLoop.java" beforeDir="false" afterPath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/eventLoop/WorkerEventLoop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/handler/LoginInHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/context/handler/LoginInHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/handler/TextInHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/context/handler/TextInHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/handler/coreHandler/EndHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/context/handler/coreHandler/EndHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/handler/coreHandler/Handler.java" beforeDir="false" afterPath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/context/handler/coreHandler/Handler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/handler/coreHandler/HeadHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/context/handler/coreHandler/HeadHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/handler/coreHandler/InHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/context/handler/coreHandler/InHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/handler/coreHandler/OutHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/context/handler/coreHandler/OutHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/handler/util/MsgUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/context/handler/util/MsgUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/online/OnlineUsers.java" beforeDir="false" afterPath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/online/OnlineUsers.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/parse/ProtocolParse.java" beforeDir="false" afterPath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/message/parse/ProtocolParse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QDuckServer/target/classes/com/dhy/nio/ServerMain.class" beforeDir="false" afterPath="$PROJECT_DIR$/QDuckServer/target/classes/com/dhy/nio/ServerMain.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QDuckServer/target/classes/com/dhy/nio/context/HandlerContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/QDuckServer/target/classes/com/dhy/nio/context/HandlerContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QDuckServer/target/classes/com/dhy/nio/context/HandlerWrapper$HandlerWrapperBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/QDuckServer/target/classes/com/dhy/nio/context/HandlerWrapper$HandlerWrapperBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QDuckServer/target/classes/com/dhy/nio/context/HandlerWrapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/QDuckServer/target/classes/com/dhy/nio/context/HandlerWrapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QDuckServer/target/classes/com/dhy/nio/domain/Attr.class" beforeDir="false" afterPath="$PROJECT_DIR$/QDuckServer/target/classes/com/dhy/nio/domain/Attr.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QDuckServer/target/classes/com/dhy/nio/eventLoop/AbstractEventLoop.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/QDuckServer/target/classes/com/dhy/nio/eventLoop/BossEventLoop.class" beforeDir="false" afterPath="$PROJECT_DIR$/QDuckServer/target/classes/com/dhy/nio/eventLoop/BossEventLoop.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QDuckServer/target/classes/com/dhy/nio/eventLoop/EventLoop.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/QDuckServer/target/classes/com/dhy/nio/eventLoop/GroupEventLoop$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/QDuckServer/target/classes/com/dhy/nio/eventLoop/GroupEventLoop.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/QDuckServer/target/classes/com/dhy/nio/eventLoop/SingleEventLoop$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/QDuckServer/target/classes/com/dhy/nio/eventLoop/SingleEventLoop.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/QDuckServer/target/classes/com/dhy/nio/eventLoop/WorkerEventLoop.class" beforeDir="false" afterPath="$PROJECT_DIR$/QDuckServer/target/classes/com/dhy/nio/eventLoop/WorkerEventLoop.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QDuckServer/target/classes/com/dhy/nio/handler/LoginInHandler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/QDuckServer/target/classes/com/dhy/nio/handler/TextInHandler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/QDuckServer/target/classes/com/dhy/nio/handler/coreHandler/EndHandler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/QDuckServer/target/classes/com/dhy/nio/handler/coreHandler/Handler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/QDuckServer/target/classes/com/dhy/nio/handler/coreHandler/HeadHandler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/QDuckServer/target/classes/com/dhy/nio/handler/coreHandler/InHandler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/QDuckServer/target/classes/com/dhy/nio/handler/coreHandler/OutHandler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/QDuckServer/target/classes/com/dhy/nio/handler/util/MsgUtil.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/QDuckServer/target/classes/com/dhy/nio/online/OnlineUsers.class" beforeDir="false" afterPath="$PROJECT_DIR$/QDuckServer/target/classes/com/dhy/nio/online/OnlineUsers.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QDuckServer/target/classes/com/dhy/nio/parse/ProtocolParse.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/eventLoop/coreEventLoop/AbstractEventLoop.java" beforeDir="false" afterPath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/eventLoop/coreEventLoop/AbstractEventLoop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/eventLoop/coreEventLoop/EventLoop.java" beforeDir="false" afterPath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/eventLoop/coreEventLoop/EventLoop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/eventLoop/coreEventLoop/GroupEventLoop.java" beforeDir="false" afterPath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/eventLoop/coreEventLoop/GroupEventLoop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/eventLoop/coreEventLoop/SingleEventLoop.java" beforeDir="false" afterPath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/eventLoop/coreEventLoop/SingleEventLoop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/lifecycle/Lifecycle.java" beforeDir="false" afterPath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/lifecycle/Lifecycle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/message/builder/MessageBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/message/builder/MessageBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QDuckServer/src/main/resources/QDuck.yml" beforeDir="false" afterPath="$PROJECT_DIR$/QDuckServer/src/main/resources/QDuck.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,18 +66,19 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="jdk.selected.JAVA_MODULE" value="1.8" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/QDuckClient/src/main/java/com/dhy/bio" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\zdh\Desktop\QDuck" />
       <recent name="C:\Users\zdh\Desktop\QDuck\QDuckClient\src\main\java\com\dhy\bio" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -117,13 +91,13 @@
       <recent name="com.dhy.nio" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.ClientMain (1)">
-    <configuration name="ClientMain (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.dhy.nio.ClientMain" />
-      <module name="QDuckServer" />
+  <component name="RunManager" selected="Application.ServerMain">
+    <configuration name="ClientMain" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.dhy.bio.ClientMain" />
+      <module name="QDuckClient" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.dhy.nio.*" />
+          <option name="PATTERN" value="com.dhy.bio.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -132,11 +106,11 @@
       </method>
     </configuration>
     <configuration name="ClientMain" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.dhy.bio.ClientMain" />
-      <module name="QDuckClient" />
+      <option name="MAIN_CLASS_NAME" value="com.dhy.nio.ClientMain" />
+      <module name="QDuckServer" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.dhy.bio.*" />
+          <option name="PATTERN" value="com.dhy.nio.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -171,14 +145,13 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.ClientMain" />
       <item itemvalue="Application.ServerMain" />
       <item itemvalue="Application.ServerMain (1)" />
-      <item itemvalue="Application.ClientMain (1)" />
+      <item itemvalue="Application.ClientMain" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.ClientMain (1)" />
+        <item itemvalue="Application.ClientMain" />
         <item itemvalue="Application.ServerMain" />
         <item itemvalue="Application.ClientMain" />
         <item itemvalue="Application.ServerMain (1)" />
@@ -199,7 +172,10 @@
       <workItem from="1654054068263" duration="10321000" />
       <workItem from="1654086088229" duration="9290000" />
       <workItem from="1654095705267" duration="27409000" />
-      <workItem from="1654181929557" duration="10719000" />
+      <workItem from="1654181929557" duration="11402000" />
+      <workItem from="1654230117145" duration="27000" />
+      <workItem from="1654230474840" duration="2805000" />
+      <workItem from="1654236165691" duration="19960000" />
     </task>
     <task id="LOCAL-00001" summary="1.0">
       <created>1654094566463</created>
@@ -222,7 +198,21 @@
       <option name="project" value="LOCAL" />
       <updated>1654181998427</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="3.0 QDuck客户端模块完善">
+      <created>1654228263018</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1654228263018</updated>
+    </task>
+    <task id="LOCAL-00005" summary="3.0 QDuck客户端模块完善">
+      <created>1654228614349</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1654228614349</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -242,9 +232,24 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="1.0" />
     <MESSAGE value="2.0" />
-    <option name="LAST_COMMIT_MESSAGE" value="2.0" />
+    <MESSAGE value="3.0 QDuck客户端模块完善" />
+    <option name="LAST_COMMIT_MESSAGE" value="3.0 QDuck客户端模块完善" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/eventLoop/coreEventLoop/GroupEventLoop.java</url>
+          <line>102</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/QDuckServer/src/main/java/com/dhy/nio/eventLoop/WorkerEventLoop.java</url>
+          <line>141</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
         <watch expression="bytes[126]" />

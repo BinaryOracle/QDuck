@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import static com.dhy.nio.constants.MessageType.COMMON_MSG;
 import static com.dhy.nio.constants.MsgType.STRING;
-import static com.dhy.nio.context.handler.util.MsgUtil.forwardMsgToUser;
+import static com.dhy.nio.context.handler.util.MsgUtil.forwardTextMsgToUser;
 
 /**
  * <p>
@@ -43,13 +43,13 @@ public class TextInHandler implements InHandler {
         RedisDb redisDb = (RedisDb) attr.getAttr(Attr.REDIS_ATTR);
         if (!redisDb.isUserExist(toUser)) {
             //发送错误信息回复用户,告知对应的用户不存在
-            forwardMsgToUser(msg.getSocketChannel(), "不能将消息转发给不存在的用户",redisDb,msg.getMe(),null);
+            forwardTextMsgToUser(msg.getSocketChannel(), "不能将消息转发给不存在的用户",redisDb,msg.getMe(),"server");
             log.info("客户端[{}]所要通知的用户不存在: {}",msg.getMe(), toUser);
         } else {
             //将消息发送给对应的用户,并且保存消息到数据库
             String toUserMsg = msg.getString();
             //判断当前用户是否在线,如果在线就直接发送给他,否则不发送
-            forwardMsgToUser(OnlineUsers.searchOneOnlineUser(toUser), toUserMsg,redisDb,toUser,msg.getMe());
+            forwardTextMsgToUser(OnlineUsers.searchOneOnlineUser(toUser), toUserMsg,redisDb,toUser,msg.getMe());
             log.info("客户端[{}]发送给{}的消息为: {}", msg.getMe(),toUser,toUserMsg);
         }
         return msg;
